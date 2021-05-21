@@ -84,3 +84,25 @@ property[19] = "Объемный расход";
 unit[19] = new Array("Cubic meter/second", "Cubic foot/second", "Cubic foot/minute", "Cubic inches/minute", "Gallons (US,liq)/minute)");
 factor[19] = new Array(1, .02831685, .0004719474, 2.731177E-7, 6.309020E-05);
 
+//Функции
+function UpdateUnitMenu(propMenu, unitMenu) {
+
+  var i;
+  i = propMenu.selectedIndex;
+  FillMenuWithArray(unitMenu, unit[i]);
+}
+
+function FillMenuWithArray(myMenu, myArray) {
+  var i;
+  myMenu.length = myArray.length;
+  for (i = 0; i < myArray.length; i++) {
+    myMenu.options[i].text = myArray[i];
+  }
+}
+
+window.onload = function(e) {
+  FillMenuWithArray(document.property_form.the_menu, property);
+  UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
+  UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu)
+}
+
