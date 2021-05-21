@@ -100,6 +100,47 @@ function FillMenuWithArray(myMenu, myArray) {
   }
 }
 
+function CalculateUnit(sourceForm, targetForm) {
+  var sourceValue = sourceForm.unit_input.value;
+
+  sourceValue = parseFloat(sourceValue);
+  if (!isNaN(sourceValue) || sourceValue == 0) {
+    sourceForm.unit_input.value = sourceValue;
+    ConvertFromTo(sourceForm, targetForm);
+  }
+}
+
+function ConvertFromTo(sourceForm, targetForm) {
+  var propIndex;
+  var sourceIndex;
+  var sourceFactor;
+  var targetIndex;
+  var targetFactor;
+  var result;
+
+  propIndex = document.property_form.the_menu.selectedIndex;
+
+  sourceIndex = sourceForm.unit_menu.selectedIndex;
+  sourceFactor = factor[propIndex][sourceIndex];
+
+  targetIndex = targetForm.unit_menu.selectedIndex;
+  targetFactor = factor[propIndex][targetIndex];
+
+
+  result = sourceForm.unit_input.value;
+  if (property[propIndex] == "Температура") {
+    result = parseFloat(result) + tempIncrement[sourceIndex];
+  }
+  result = result * sourceFactor;
+ 
+  result = result / targetFactor;
+  if (property[propIndex] == "Температура") {
+    result = parseFloat(result) - tempIncrement[targetIndex];
+  }
+
+  targetForm.unit_input.value = result;
+}
+
 window.onload = function(e) {
   FillMenuWithArray(document.property_form.the_menu, property);
   UpdateUnitMenu(document.property_form.the_menu, document.form_A.unit_menu);
