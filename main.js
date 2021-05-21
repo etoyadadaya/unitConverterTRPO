@@ -106,3 +106,17 @@ window.onload = function(e) {
   UpdateUnitMenu(document.property_form.the_menu, document.form_B.unit_menu)
 }
 
+document.getElementByClass('numbersonly').addEventListener('keydown', function(e) {
+  var key = e.keyCode ? e.keyCode : e.which;
+
+  if (!([8, 9, 13, 27, 46, 110, 190].indexOf(key) !== -1 ||
+      (key == 65 && (e.ctrlKey || e.metaKey)) || // Выбрать все
+      (key == 67 && (e.ctrlKey || e.metaKey)) || // Копировать
+      (key == 86 && (e.ctrlKey || e.metaKey)) || // Вставить
+      (key >= 35 && key <= 40) || // End, Home, Arrows
+      (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) || // Цифровые клавиши
+      (key >= 96 && key <= 105) // Numpad
+      (key == 190) // Numpad
+    )) e.preventDefault();
+});
+
